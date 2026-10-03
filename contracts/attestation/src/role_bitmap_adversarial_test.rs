@@ -18,7 +18,9 @@ fn get_roles_returns_zero_for_unknown_accounts_without_creating_state() {
     let account = Address::generate(&env);
 
     assert_eq!(
-        in_contract(&env, &contract, |env| access_control::get_roles(env, &account)),
+        in_contract(&env, &contract, |env| access_control::get_roles(
+            env, &account
+        )),
         0
     );
     assert!(in_contract(&env, &contract, access_control::get_role_holders).is_empty());
@@ -34,7 +36,9 @@ fn get_roles_reads_composite_bitmaps_and_preserves_them_after_rejected_update() 
         access_control::set_roles(env, &account, composite);
     });
     assert_eq!(
-        in_contract(&env, &contract, |env| access_control::get_roles(env, &account)),
+        in_contract(&env, &contract, |env| access_control::get_roles(
+            env, &account
+        )),
         composite
     );
 
@@ -45,7 +49,9 @@ fn get_roles_reads_composite_bitmaps_and_preserves_them_after_rejected_update() 
     }));
     assert!(rejected.is_err());
     assert_eq!(
-        in_contract(&env, &contract, |env| access_control::get_roles(env, &account)),
+        in_contract(&env, &contract, |env| access_control::get_roles(
+            env, &account
+        )),
         composite
     );
 }
